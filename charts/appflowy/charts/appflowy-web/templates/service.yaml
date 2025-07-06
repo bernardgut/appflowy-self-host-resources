@@ -6,6 +6,9 @@ metadata:
     {{- include "appflowy-web.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+    - IPv4
   ports:
     - port: {{ .Values.service.port }}
       targetPort: http
