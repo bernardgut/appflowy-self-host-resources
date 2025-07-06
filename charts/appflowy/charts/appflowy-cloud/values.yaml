@@ -1,6 +1,10 @@
 # Default values for appflowy-cloud.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+
+# Address to bind the application to.
+listen_host: "[::]"
+
 replicaCount: 1
 
 image:

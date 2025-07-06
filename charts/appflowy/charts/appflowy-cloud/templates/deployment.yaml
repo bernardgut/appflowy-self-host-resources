@@ -38,6 +38,8 @@ spec:
           env:
             - name: LOG_LEVEL
               value: {{ .Values.logLevel }}
+            - name: APPFLOWY_APPLICATION_HOST
+              value: {{ .Values.listen_host | quote }}
             - name: APPFLOWY_ENVIRONMENT
               value: production
             - name: APPFLOWY_DATABASE_URL
