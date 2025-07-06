@@ -3,6 +3,16 @@
 This is an unofficial helm chart for installing [AppFlowy Cloud](https://github.com/AppFlowy-IO/AppFlowy-Cloud) on Kubernetes.
 Please report any bugs or issues to this repository instead of the offical AppFlowy repository.
 
+### Quickstart with Kubernetes
+1. Init the db: Create a database and a database user with role `OWNER` in your postgres instance, e.g. `appflowy`. 
+2. Init the db extensions: login the `appflowy` db with your preferred tool and setup pgvector, e.g. `psql appflowy -c "CREATE EXTENSION IF NOT EXISTS vector;"`. Make sure your cloud DB instance ships the pgvector binaries (this should be the case in 2025)
+3. Instanciate the chart: Edit `values.yaml`, then `helm upgrade --install -n appflowy -f appflowy.helm.yaml appflowy ./appflowy-self-host-resources/charts/appflowy`
+
+   **NOTE** : In its current version the chart manifest doesnt implement any `securityprofile` so you might have to add them manually or to run it on a priviledged namespace. This will be fixed in a future release.
+   
+   **NOTE**: The `ingress.nginx` field will actually support any `ingressClassName` that you may find on your cloud instance (e.g. `Clilium`). It is simply poorly named.
+4. The current Appflowy pod init sequence runs DB migrations. Those migrations are **not re-entrant.** This means if anything goes wrong during the above steps, you need to **nuke the database and start over**
+
 ### Quick Start With Minikube
 1. Make sure you have the Nginx ingress controller installed. If you haven't, you can enabled it with
 ```bash
